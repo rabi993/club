@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from .models import People
 
 class BloodSerializer(serializers.ModelSerializer):
-    # Nested fields for related models
     username = serializers.CharField(source='user.username', read_only=True)
     email = serializers.EmailField(source='user.email', read_only=True)
     first_name = serializers.CharField(source='user.first_name', read_only=True)
@@ -20,5 +19,6 @@ class BloodSerializer(serializers.ModelSerializer):
             'first_name',
             'last_name',
             'blood_group',
-            'last_donate_date'
+            'last_donate_date',
         ]
+

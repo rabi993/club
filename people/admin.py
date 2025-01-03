@@ -4,7 +4,7 @@ from . import models
 # Register your models here.
 @admin.register(models.People)
 class PeopleAdmin(admin.ModelAdmin):
-    list_display = ('user', 'first_name', 'last_name', 'email', 'mobile_no', 'address', 'blood_group', 'gender', 'marital_status', 'worksat')
+    list_display = ('user', 'first_name', 'last_name', 'email', 'mobile_no', 'union','word','village', 'blood_group', 'gender', 'marital_status', 'worksat')
     search_fields = ('user__username', 'mobile_no', 'worksat')
     list_filter = ('gender', 'marital_status', 'blood_group', 'complete')
 

@@ -3,7 +3,7 @@ from django.urls import path, include
 from . import views
 router = DefaultRouter()
 
-router.register('list', views.PostPagination) 
+router.register('list', views.PostViewset) 
 router.register('comments', views.CommentViewset) 
 
 urlpatterns = [

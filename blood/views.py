@@ -3,9 +3,10 @@ from .models import Blood
 from .serializers import BloodSerializer
 
 class BloodListView(generics.ListAPIView):
-    queryset = Blood.objects.all()
+    queryset = Blood.objects.select_related('user', 'person').all()
     serializer_class = BloodSerializer
 
 class BloodDetailView(generics.RetrieveAPIView):
-    queryset = Blood.objects.all()
+    queryset = Blood.objects.select_related('user', 'person').all()
     serializer_class = BloodSerializer
+

@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import dj_database_url
+import environ
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,21 +30,44 @@ SECRET_KEY = 'django-insecure-z)1_rol0uawzr6(p8_1h9-0cpd*e-0asb7q@!_^5xm+%vljz*w
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['https://flowers-world.onrender.com','https://*.127.0.0.1']
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
+    "whitenoise.runserver_nostatic",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'django_filters',
+    'contact_us',
+    'service',
+    'account',
+    'banner',
+    'blood',
+    'category',
+    'transaction',
+    'people',
+    'post',
+    'event',
+    'notice',
+    # 'message',
 ]
 
+   
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,7 +76,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+
 ROOT_URLCONF = 'club.urls'
+CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS = ['https://club.onrender.com']
+
+CORS_ALLOWED_ORIGINS = [
+    "http://127.0.0.1:5501",
+    "https://club.onrender.com",  # or the domain of your frontend
+]
 
 TEMPLATES = [
     {
@@ -80,7 +116,30 @@ DATABASES = {
     }
 }
 
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+]
 
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -115,8 +174,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
 
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+MEDIA_URL = '/media/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

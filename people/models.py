@@ -8,15 +8,17 @@ class People(models.Model):
     mobile_no = models.CharField(max_length=15)  # Mobile number (max length increased for international numbers)
     
     # Additional fields
+    birth_date = models.DateField(blank=True, null=True)
     union = models.CharField(max_length=255, blank=True, null=True)  # Union/area information
-    world = models.CharField(max_length=255, blank=True, null=True)  # Country or global location
+    word = models.CharField(max_length=255, blank=True, null=True)  # Country or global location
     village = models.CharField(max_length=255, blank=True, null=True)  # Village information
     blood_group = models.CharField(
         max_length=4, 
         choices=[('A+', 'A+'), ('A-', 'A-'), ('AB+', 'AB+'), ('AB-', 'AB-'), ('B+', 'B+'), ('B-', 'B-'), ('O+', 'O+'), ('O-', 'O-')], 
         blank=True,
         null=True
-    ) 
+    )
+    last_blood_donate_date = models.DateField(blank=True, null=True)
     gender = models.CharField(
         max_length=10,
         choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')],

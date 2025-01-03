@@ -8,5 +8,5 @@ class BloodAdmin(admin.ModelAdmin):
     list_filter = ('person__blood_group',)
 
     def get_blood_group(self, obj):
-        return obj.person.blood_group
+        return obj.person.blood_group if obj.person else "N/A"
     get_blood_group.short_description = 'Blood Group'

@@ -18,7 +18,7 @@ class PostViewset(viewsets.ModelViewSet):
     serializer_class = serializers.PostSerializer
     filter_backends = [filters.SearchFilter]
     pagination_class = PostPagination
-    search_fields = ['title', 'content', 'category__name', 'color__name']
+    search_fields = ['title', 'content', 'category__name']
     # permission_classes = [IsAuthenticatedOrReadOnly]  
 
 
