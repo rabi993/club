@@ -20,7 +20,8 @@ class Transaction(models.Model):
     purpose = models.TextField(blank=True, null=True)  # Purpose of the transaction
     comment = models.TextField(blank=True, null=True)  # Additional comments
     created_at = models.DateTimeField(auto_now_add=True)  # Timestamp of transaction creation
-    updated_at = models.DateTimeField(auto_now=True)  # Timestamp of last update
+    updated_at = models.DateTimeField(auto_now=True)
+    approved= models.BooleanField(blank=True, null=True,default=False)
 
     def __str__(self):
         return f"Transaction {self.trx_id} by {self.user.username}"
@@ -48,37 +49,40 @@ class Transaction(models.Model):
         """
         Update the account when a transaction is created.
         """
-        if self.typys == 'credit':
-            self.account.total_credit += self.amount
-        elif self.typys == 'debit':
-            self.account.total_debit += self.amount
-        self.account.update_final_cash()
+        if self.approved: 
+            if self.typys == 'credit':
+                self.account.total_credit += self.amount
+            elif self.typys == 'debit':
+                self.account.total_debit += self.amount
+            self.account.update_final_cash()
 
     def update_account_on_edit(self, old_amount, old_typys):
         """
         Update the account when a transaction is edited.
         """
-        if old_typys == 'credit':
-            self.account.total_credit -= old_amount
-        elif old_typys == 'debit':
-            self.account.total_debit -= old_amount
+        if self.approved: 
+            if old_typys == 'credit':
+                self.account.total_credit -= old_amount
+            elif old_typys == 'debit':
+                self.account.total_debit -= old_amount
 
-        if self.typys == 'credit':
-            self.account.total_credit += self.amount
-        elif self.typys == 'debit':
-            self.account.total_debit += self.amount
+            if self.typys == 'credit':
+                self.account.total_credit += self.amount
+            elif self.typys == 'debit':
+                self.account.total_debit += self.amount
 
-        self.account.update_final_cash()
+            self.account.update_final_cash()
 
     def update_account_on_delete(self):
         """
         Update the account when a transaction is deleted.
         """
-        if self.typys == 'credit':
-            self.account.total_credit -= self.amount
-        elif self.typys == 'debit':
-            self.account.total_debit -= self.amount
-        self.account.update_final_cash()
+        if self.approved:
+            if self.typys == 'credit':
+                self.account.total_credit -= self.amount
+            elif self.typys == 'debit':
+                self.account.total_debit -= self.amount
+            self.account.update_final_cash()
 
 
 @receiver(pre_save, sender=Transaction)
@@ -88,8 +92,15 @@ def handle_transaction_update(sender, instance, **kwargs):
     """
     if instance.pk:  # Only if the transaction already exists (i.e., edit mode)
         old_transaction = Transaction.objects.get(pk=instance.pk)
-        instance.update_account_on_edit(old_transaction.amount, old_transaction.typys)
-
+        # instance.update_account_on_edit(old_transaction.amount, old_transaction.typys)
+        if old_transaction.approved != instance.approved:
+            # Handle approval change
+            if instance.approved:
+                instance.update_account_on_create()
+            else:
+                instance.update_account_on_delete()
+        else:
+            instance.update_account_on_edit(old_transaction.amount, old_transaction.typys)
 
 @receiver(post_save, sender=Transaction)
 def handle_transaction_create(sender, instance, created, **kwargs):
