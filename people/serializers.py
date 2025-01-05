@@ -9,17 +9,17 @@ class PeopleSerializer(serializers.ModelSerializer):
 
 class RegistrationSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(required = True)
-    address = serializers.CharField(required=True)
+    # address = serializers.CharField(required=True)
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email','address', 'password', 'confirm_password']
+        fields = ['username', 'first_name', 'last_name', 'email', 'password', 'confirm_password']
     
     def save(self):
         username = self.validated_data['username']
         first_name = self.validated_data['first_name']
         last_name = self.validated_data['last_name']
         email = self.validated_data['email']
-        address = self.validated_data['address']
+        # address = self.validated_data['address']
         password = self.validated_data['password']
         password2 = self.validated_data['confirm_password']
 
@@ -35,7 +35,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         account.save()
         
         
-        people = models.People(user=account, address=address)
+        people = models.People(user=account)
         people.save()
         
         return account

@@ -3,7 +3,7 @@ from .models import Blood
 
 @admin.register(Blood)
 class BloodAdmin(admin.ModelAdmin):
-    list_display = ('user', 'get_blood_group', 'last_donate_date')
+    list_display = ('user', 'get_blood_group', 'last_donate_date','available_for_donate_date')
     search_fields = ('user__username', 'person__blood_group')
     list_filter = ('person__blood_group',)
 

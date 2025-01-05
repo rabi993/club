@@ -18,7 +18,7 @@ class People(models.Model):
         blank=True,
         null=True
     )
-    last_blood_donate_date = models.DateField(blank=True, null=True)
+    # last_blood_donate_date = models.DateField(blank=True, null=True)
     gender = models.CharField(
         max_length=10,
         choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')],

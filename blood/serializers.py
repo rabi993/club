@@ -20,5 +20,6 @@ class BloodSerializer(serializers.ModelSerializer):
             'last_name',
             'blood_group',
             'last_donate_date',
+            'available_for_donate_date',
         ]
 
