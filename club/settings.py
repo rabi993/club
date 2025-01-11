@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'service',
     'account',
     'banner',
-    'blood',
+    # 'blood',
     'category',
     'transaction',
     'people',

@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import timedelta
 
 # Create your models here.
 class People(models.Model):
@@ -18,7 +19,8 @@ class People(models.Model):
         blank=True,
         null=True
     )
-    # last_blood_donate_date = models.DateField(blank=True, null=True)
+    last_blood_donate_date = models.DateField(blank=True, null=True)
+    available_for_donate_date = models.DateField(blank=True, null=True) 
     gender = models.CharField(
         max_length=10,
         choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')],
@@ -40,6 +42,15 @@ class People(models.Model):
     subject = models.CharField(max_length=255, blank=True, null=True)  # Field of study/subject
     association_post = models.CharField(max_length=255, blank=True, null=True)  # Association/organization post
     cv = models.URLField(max_length=500, blank=True, null=True)  # URL to CV/resume
+
+
+    
+    def save(self, *args, **kwargs):
+        if self.last_blood_donate_date:
+            self.available_for_donate_date = self.last_blood_donate_date + timedelta(days=90)
+        else:
+            self.available_for_donate_date = None
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.first_name} {self.user.last_name}"

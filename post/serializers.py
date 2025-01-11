@@ -3,7 +3,7 @@ from .models import Post
 from category.models import Category
 
 class PostSerializer(serializers.ModelSerializer):
-    user = serializers.StringRelatedField(many=False, read_only=True)  # Display user as a string (e.g., username)
+    # user = serializers.StringRelatedField(many=False, read_only=True)  # Display user as a string (e.g., username)
     
     # Show category names while allowing edits via IDs
     category = serializers.SlugRelatedField(

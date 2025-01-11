@@ -14,7 +14,7 @@ urlpatterns = [
     path('service/', include('service.urls')),
     path('account/', include('account.urls')),
     path('banner/', include('banner.urls')),
-    path('blood/', include('blood.urls')),
+    # path('blood/', include('blood.urls')),
     path('category/', include('category.urls')),
     path('transaction/', include('transaction.urls')),
     path('people/', include('people.urls')),
