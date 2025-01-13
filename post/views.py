@@ -12,14 +12,14 @@ class PostPagination(pagination.PageNumberPagination):
     page_size_query_param = page_size
     max_page_size = 100
 
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+# from rest_framework.permissions import IsAuthenticatedOrReadOnly
 class PostViewset(viewsets.ModelViewSet):
     queryset = models.Post.objects.all()
     serializer_class = serializers.PostSerializer
     filter_backends = [filters.SearchFilter]
     pagination_class = PostPagination
     search_fields = ['title', 'content', 'category__name']
-    permission_classes = [IsAuthenticatedOrReadOnly]  
+    # permission_classes = [IsAuthenticatedOrReadOnly]  
 
 
 

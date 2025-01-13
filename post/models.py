@@ -5,7 +5,7 @@ from category.models import Category
 from django.core.exceptions import ValidationError
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)  # Assuming a user can have multiple Posts
+    user = models.CharField(max_length=50, blank=True, null=True)
     title = models.CharField(max_length=50, unique=True)
     content = models.TextField()
     image = models.URLField(max_length=500, blank=True, null=True) 
