@@ -11,6 +11,7 @@ class Post(models.Model):
     image = models.URLField(max_length=500, blank=True, null=True) 
     category = models.ManyToManyField(Category)
     # category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
     def __str__(self):
         return self.title 
@@ -19,6 +20,7 @@ class Post(models.Model):
         # unique_together = ('title', 'category')
         # unique ='title'
         verbose_name_plural = "Posts"
+        ordering = ['-created_at']
 
 
 class Comment(models.Model):

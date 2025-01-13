@@ -17,5 +17,17 @@ class Notice(models.Model):
         verbose_name_plural = "Notices"
         ordering = ['-created_at']  # Orders notices by the most recent first
 
+from django.contrib.auth.models import User    
+
+class noticeComment(models.Model):
+    commentor = models.ForeignKey(User, on_delete=models.CASCADE)  # User is already the commentor
+    post = models.ForeignKey(Notice, on_delete=models.CASCADE)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
     
-    
+
+    def __str__(self):
+        return f"Commentor: {self.commentor.first_name}; Post: {self.post.name}"  # Updated
+
+    class Meta:
+        verbose_name_plural = "noticeComments"
