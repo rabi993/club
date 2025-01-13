@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Event(models.Model):
+    user = models.CharField(max_length=50, blank=True, null=True)
     name = models.CharField(max_length=100)  # Name of the event (increased max_length for flexibility)
     description = models.TextField()  # Detailed description of the event
     image = models.URLField(max_length=500, blank=True, null=True)  # Optional URL for an event image
