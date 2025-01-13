@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Notice(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Link the notice to a user
+    user = models.CharField(max_length=50, blank=True, null=True) 
     name = models.CharField(max_length=100)  # Name/title of the notice
     description = models.TextField()  # Detailed description of the notice
     file = models.URLField(max_length=500, blank=True, null=True)  # Optional file (e.g., link to a document)
