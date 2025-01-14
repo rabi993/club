@@ -3,6 +3,7 @@ from . import models
 from django.contrib.auth.models import User
 
 class PeopleSerializer(serializers.ModelSerializer):
+    # is_active = serializers.BooleanField(source='user.is_active')
     class Meta:
         model = models.People
         fields = '__all__'

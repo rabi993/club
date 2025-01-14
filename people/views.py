@@ -22,6 +22,8 @@ class PeopleViewset(viewsets.ModelViewSet):
 
 class UserRegistrationApiView(APIView):
     serializer_class = serializers.RegistrationSerializer
+
+ 
     
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -34,7 +36,7 @@ class UserRegistrationApiView(APIView):
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             print("uid ", uid)
             
-            confirm_link = f"https://flowers-world.onrender.com/people/active/{uid}/{token}"
+            confirm_link = f"http://127.0.0.1:8000/people/active/{uid}/{token}"
             
             email_subject = "Confirm Your Email"
             email_body = render_to_string('confirm_email.html', {'confirm_link' : confirm_link})
@@ -56,9 +58,9 @@ def activate(request, uid64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        return redirect('http://127.0.0.1:5501/login.html')
+        return redirect('http://127.0.0.1:5500/login.html')
     else:
-        return redirect('http://127.0.0.1:5501/registration.html')
+        return redirect('http://127.0.0.1:5500/registration.html')
     
 
 class UserLoginApiView(APIView):
@@ -138,3 +140,31 @@ class ChangePasswordApiView(APIView):
         # Return success response
         return Response({"success": "Password changed successfully and email sent."}, status=status.HTTP_200_OK)
 
+from rest_framework.permissions import IsAdminUser
+from django.contrib.auth.models import User
+
+class ToggleUserStatusApiView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request, user_id):
+        try:
+            user = User.objects.get(id=user_id)
+            user.is_active = not user.is_active
+            user.save()
+            status = "activated" if user.is_active else "deactivated"
+            return Response({"message": f"User successfully {status}."}, status=200)
+        except User.DoesNotExist:
+            return Response({"error": "User not found."}, status=404)
+# class UserListApiView(APIView):
+#     def get(self, request):
+#         users = User.objects.all()
+#         data = [
+#             {
+#                 "id": user.id,
+#                 "username": user.username,
+#                 "email": user.email,
+#                 "is_active": user.is_active
+#             }
+#             for user in users
+#         ]
+#         return Response(data, status=200) 

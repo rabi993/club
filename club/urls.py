@@ -22,6 +22,7 @@ urlpatterns = [
     path('notice/', include('notice.urls')),
     path('event/', include('event.urls')),
     # path('message/', include('message.urls')),
+    
 ]
 
 
