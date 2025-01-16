@@ -140,31 +140,84 @@ class ChangePasswordApiView(APIView):
         # Return success response
         return Response({"success": "Password changed successfully and email sent."}, status=status.HTTP_200_OK)
 
-from rest_framework.permissions import IsAdminUser
-from django.contrib.auth.models import User
+# from rest_framework.permissions import IsAdminUser
+# from django.contrib.auth.models import User
 
-class ToggleUserStatusApiView(APIView):
-    permission_classes = [IsAdminUser]
+# class ToggleUserStatusApiView(APIView):
+#     permission_classes = [IsAdminUser]
 
-    def post(self, request, user_id):
+#     def post(self, request, user_id):
+#         try:
+#             user = User.objects.get(id=user_id)
+#             user.is_active = not user.is_active
+#             user.save()
+
+#             status = "activated" if user.is_active else "deactivated"
+#             return Response({"message": f"User successfully {status}."}, status=200)
+#         except User.DoesNotExist:
+#             return Response({"error": "User not found."}, status=404)
+ 
+# from rest_framework.permissions import IsAdminUser
+# from django.contrib.auth.models import User
+# from rest_framework.views import APIView
+# from rest_framework.response import Response
+# from django.core.mail import EmailMultiAlternatives
+# from django.template.loader import render_to_string
+
+# class ToggleUserStatusApiView(APIView):
+#     permission_classes = [IsAdminUser]
+
+#     def post(self, request, user_id):
+#         try:
+#             user = User.objects.get(id=user_id)
+#             previous_status = user.is_active
+#             user.is_active = not user.is_active
+#             user.save()
+
+#             # Send email notification if the status changes
+#             if previous_status != user.is_active:
+#                 email_subject = f"Your Account Status: {'Activated' if user.is_active else 'Deactivated'}"
+#                 email_body = render_to_string('admin_email.html', {
+#                     'user': user,
+#                     'is_active': user.is_active,
+#                 })
+
+#                 email = EmailMultiAlternatives(
+#                     email_subject,
+#                     '',
+#                     to=[user.email]
+#                 )
+#                 email.attach_alternative(email_body, "text/html")
+#                 email.send()
+
+#             status = "activated" if user.is_active else "deactivated"
+#             return Response({"message": f"User successfully {status}."}, status=200)
+
+#         except User.DoesNotExist:
+#             return Response({"error": "User not found."}, status=404)
+
+
+from django.core.mail import send_mail
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+
+@csrf_exempt
+def send_email(request):
+    if request.method == 'POST':
         try:
-            user = User.objects.get(id=user_id)
-            user.is_active = not user.is_active
-            user.save()
-            status = "activated" if user.is_active else "deactivated"
-            return Response({"message": f"User successfully {status}."}, status=200)
-        except User.DoesNotExist:
-            return Response({"error": "User not found."}, status=404)
-# class UserListApiView(APIView):
-#     def get(self, request):
-#         users = User.objects.all()
-#         data = [
-#             {
-#                 "id": user.id,
-#                 "username": user.username,
-#                 "email": user.email,
-#                 "is_active": user.is_active
-#             }
-#             for user in users
-#         ]
-#         return Response(data, status=200) 
+            data = json.loads(request.body)
+            recipient_email = data.get('email')
+            user_status = data.get('status')
+
+            subject = 'Account Status Update'
+            message = f'Your account status has been updated to: {user_status}'
+            sender_email = 'your-email@example.com'
+
+            send_mail(subject, message, sender_email, [recipient_email])
+
+            return JsonResponse({'message': 'Email sent successfully.'}, status=200)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return JsonResponse({'error': 'Invalid request method.'}, status=400)

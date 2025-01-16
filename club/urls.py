@@ -23,6 +23,7 @@ urlpatterns = [
     path('event/', include('event.urls')),
     # path('message/', include('message.urls')),
     
+    
 ]
 
 

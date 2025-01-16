@@ -84,7 +84,7 @@ class Transaction(models.Model):
                 self.account.total_debit -= self.amount
             self.account.update_final_cash()
 
-
+from django.core.mail import send_mail
 @receiver(pre_save, sender=Transaction)
 def handle_transaction_update(sender, instance, **kwargs):
     """
@@ -97,10 +97,33 @@ def handle_transaction_update(sender, instance, **kwargs):
             # Handle approval change
             if instance.approved:
                 instance.update_account_on_create()
+                send_transaction_approval_email(instance)
             else:
                 instance.update_account_on_delete()
         else:
             instance.update_account_on_edit(old_transaction.amount, old_transaction.typys)
+def send_transaction_approval_email(transaction):
+    """
+    Sends an email notification for an approved transaction.
+    """
+    subject = f"Transaction Approved: {transaction.trx_id}"
+    message = (
+        f"Dear {transaction.user.first_name} {transaction.user.last_name},\n\n"
+        f"Your transaction with the ID {transaction.trx_id} has been approved.\n\n"
+        f"Details:\n"
+        f"Amount: {transaction.amount}\n"
+        f"Type: {transaction.get_typys_display()}\n"
+        f"Purpose: {transaction.purpose}\n"
+        f"Date: {transaction.created_at.strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+        f"Thank you for using our service!"
+    )
+    from_email = "rabiulislam.170113@s.pust.ac.bd"  
+    recipient_list = [transaction.user.email]
+
+    try:
+        send_mail(subject, message, from_email, recipient_list)
+    except Exception as e:
+        print(f"Error sending email: {e}")
 
 @receiver(post_save, sender=Transaction)
 def handle_transaction_create(sender, instance, created, **kwargs):
