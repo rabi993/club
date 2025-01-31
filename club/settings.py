@@ -81,7 +81,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'club.urls'
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ['https://club-1-6len.onrender.com']
+# CSRF_TRUSTED_ORIGINS = ['https://club-1-6len.onrender.com']
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
