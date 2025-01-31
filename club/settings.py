@@ -24,14 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-z)1_rol0uawzr6(p8_1h9-0cpd*e-0asb7q@!_^5xm+%vljz*w'
+# SECRET_KEY = 'django-insecure-z)1_rol0uawzr6(p8_1h9-0cpd*e-0asb7q@!_^5xm+%vljz*w'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://flowers-world.onrender.com','https://*.127.0.0.1']
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ['https://club-78ux.onrender.com','https://*.127.0.0.1']
 
 
 
@@ -80,11 +81,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'club.urls'
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ['https://club.onrender.com']
+CSRF_TRUSTED_ORIGINS = ['https://club-78ux.onrender.com']
 
 CORS_ALLOWED_ORIGINS = [
-    "http://127.0.0.1:5501",
-    "https://club.onrender.com",  # or the domain of your frontend
+    "http://127.0.0.1:5500",
+    "https://club-78ux.onrender.com",  # or the domain of your frontend
 ]
 
 TEMPLATES = [

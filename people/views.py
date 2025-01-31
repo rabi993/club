@@ -197,27 +197,27 @@ class ChangePasswordApiView(APIView):
 #             return Response({"error": "User not found."}, status=404)
 
 
-from django.core.mail import send_mail
-from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-import json
+# from django.core.mail import send_mail
+# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# import json
 
-@csrf_exempt
-def send_email(request):
-    if request.method == 'POST':
-        try:
-            data = json.loads(request.body)
-            recipient_email = data.get('email')
-            user_status = data.get('status')
+# @csrf_exempt
+# def send_email(request):
+#     if request.method == 'POST':
+#         try:
+#             data = json.loads(request.body)
+#             recipient_email = data.get('email')
+#             user_status = data.get('status')
 
-            subject = 'Account Status Update'
-            message = f'Your account status has been updated to: {user_status}'
-            sender_email = 'your-email@example.com'
+#             subject = 'Account Status Update'
+#             message = f'Your account status has been updated to: {user_status}'
+#             sender_email = 'your-email@example.com'
 
-            send_mail(subject, message, sender_email, [recipient_email])
+#             send_mail(subject, message, sender_email, [recipient_email])
 
-            return JsonResponse({'message': 'Email sent successfully.'}, status=200)
-        except Exception as e:
-            return JsonResponse({'error': str(e)}, status=500)
+#             return JsonResponse({'message': 'Email sent successfully.'}, status=200)
+#         except Exception as e:
+#             return JsonResponse({'error': str(e)}, status=500)
 
-    return JsonResponse({'error': 'Invalid request method.'}, status=400)
+#     return JsonResponse({'error': 'Invalid request method.'}, status=400)
