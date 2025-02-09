@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import dj_database_url
+# import dj_database_url
 import environ
 env = environ.Env()
 environ.Env.read_env()
@@ -33,7 +33,7 @@ DEBUG = True
 # ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
-# CSRF_TRUSTED_ORIGINS = ['https://club-wine.vercel.app','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://club-wine.vercel.app','https://*.127.0.0.1']
 
 
 
