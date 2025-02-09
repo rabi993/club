@@ -86,7 +86,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
-    "https://club-wine.vercel.app/", # or the domain of your frontend
+    "https://club-wine.vercel.app", # or the domain of your frontend
 ]
 
 TEMPLATES = [
