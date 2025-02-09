@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-import dj_database_url
+# import dj_database_url
 import environ
 env = environ.Env()
 environ.Env.read_env()
@@ -31,7 +31,8 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
 CSRF_TRUSTED_ORIGINS = ['https://club-1-6len.onrender.com','https://*.127.0.0.1']
 
 
@@ -104,7 +105,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'club.wsgi.application'
+WSGI_APPLICATION = 'club.wsgi.app'
 
 
 # Database
