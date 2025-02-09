@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-# import dj_database_url
+import dj_database_url
 import environ
 env = environ.Env()
 environ.Env.read_env()
@@ -33,7 +33,7 @@ DEBUG = True
 # ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ["*"]
 ALLOWED_HOSTS = ["127.0.0.1", ".vercel.app"]
-CSRF_TRUSTED_ORIGINS = ['https://club-1-6len.onrender.com','https://*.127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['https://club-wine.vercel.app','https://club-1-6len.onrender.com','https://*.127.0.0.1']
 
 
 
@@ -82,10 +82,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'club.urls'
 CORS_ORIGIN_ALLOW_ALL = True
-# CSRF_TRUSTED_ORIGINS = ['https://club-1-6len.onrender.com']
+# CSRF_TRUSTED_ORIGINS = ['https://club-1-6len.onrender.com','https://club-wine.vercel.app/']
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",
+    "https://club-wine.vercel.app/",
     "https://club-1-6len.onrender.com",  # or the domain of your frontend
 ]
 
