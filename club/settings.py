@@ -116,10 +116,20 @@ WSGI_APPLICATION = 'club.wsgi.app'
 #     'default': dj_database_url.config(default='sqlite:///db.sqlite3')
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.lblghemaumakyvamlutd',
+        'PASSWORD': 'tMjJo5LCZMBWOk7d',
+        'HOST': 'aws-0-ap-southeast-1.pooler.supabase.com',
+        'PORT': '6543'
     }
 }
 
