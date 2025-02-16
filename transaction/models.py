@@ -10,6 +10,7 @@ class Transaction(models.Model):
     trx_id = models.CharField(max_length=255, unique=True)  # Unique transaction ID
     reference = models.CharField(max_length=255, blank=True, null=True)  # Reference (optional)
     amount = models.DecimalField(max_digits=10, decimal_places=2)  # Transaction amount
+    accountNo = models.CharField(max_length=20,blank=True, null=True)  # Transaction amount
     TYPES = [
         ('credit', 'Credit'),
         ('debit', 'Debit'),

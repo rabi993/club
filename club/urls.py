@@ -23,6 +23,7 @@ urlpatterns = [
     path('event/', include('event.urls')),
     # path('message/', include('message.urls')),
     path('send-email/', send_email, name='send_email'),
+    path('payment/', include('payment.urls')),
     
 ]
 
