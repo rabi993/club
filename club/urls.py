@@ -24,6 +24,7 @@ urlpatterns = [
     # path('message/', include('message.urls')),
     path('send-email/', send_email, name='send_email'),
     path('payment/', include('payment.urls')),
+    path('newsletter/', include('newsletter.urls')),
     
 ]
 
